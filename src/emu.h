@@ -7,7 +7,8 @@
 // sourced from
 // https://www.cs.columbia.edu/~sedwards/classes/2022/4840-spring/designs/CHIP-8.pdf
 typedef struct {
-  uint8_t registers[0x10];
+  uint8_t registers[16];
+  uint16_t index;
   uint8_t stack[16];
   uint8_t stack_ptr;
   uint8_t timer;
