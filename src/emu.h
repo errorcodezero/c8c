@@ -18,4 +18,6 @@ typedef struct {
   bool frame_buf;
 } Chip8;
 
+Chip8 init_chip8();
+
 #endif // INCLUDE_SRC_EMU_H_
