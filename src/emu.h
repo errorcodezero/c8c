@@ -22,5 +22,6 @@ typedef struct {
 } Chip8;
 
 Chip8 init_chip8();
+void step_chip8(Chip8 *c8);
 
 #endif // INCLUDE_SRC_EMU_H_
