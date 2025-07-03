@@ -7,8 +7,8 @@
 // sourced from
 // https://www.cs.columbia.edu/~sedwards/classes/2022/4840-spring/designs/CHIP-8.pdf
 typedef struct {
-  uint8_t registers[15];
-  uint8_t flag;
+  // last register is for storing flags
+  uint8_t registers[16];
   uint16_t index;
   uint16_t instruction;
   uint16_t stack[16];
