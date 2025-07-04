@@ -37,6 +37,8 @@ uint16_t get_instruction(Chip8 *c8) {
   return (((uint16_t)big) << 8) + little;
 }
 
+// bad habit of shoving all the opcode handling into one function but there's so
+// little opcodes on this system that it should be alright?
 void step_chip8(Chip8 *c8) {
   uint16_t instruction = get_instruction(c8);
 
@@ -144,7 +146,7 @@ void step_chip8(Chip8 *c8) {
   } else if ((instruction & 0xF000) == 0xC000) {
     uint8_t random = rand();
     uint8_t *reg = &c8->registers[(instruction >> 4) & 0x0F];
-    *reg = ((uint8_t) instruction) & random;
+    *reg = ((uint8_t)instruction) & random;
   } else if ((instruction & 0xF000) == 0xD000) {
   } else if ((instruction & 0xF000) == 0xE000) {
   } else if ((instruction & 0xF000) == 0xF000) {
@@ -156,5 +158,25 @@ void step_chip8(Chip8 *c8) {
     } else if ((instruction >> 12) != 0) {
       c8->halted = true;
     }
+  }
+}
+
+void render_sprite(Chip8 *c8, uint8_t sprite_index, uint8_t height, uint8_t x,
+                   uint8_t y) {
+  x = x % SCREEN_WIDTH;
+  y = y % SCREEN_HEIGHT;
+  for (uint8_t i = 0; i < height; i++) {
+    uint8_t byte = c8->memory[sprite_index];
+    uint8_t mask = 0b1;
+    for (uint8_t i = 0; i < 8; i++) {
+      c8->frame[x + i][y] ^= (byte & mask);
+      if (x + i >= SCREEN_WIDTH) {
+        break;
+      }
+    }
+    if (++y >= SCREEN_HEIGHT) {
+      break;
+    }
+    mask <<= 1;
   }
 }
