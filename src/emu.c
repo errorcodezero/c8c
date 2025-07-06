@@ -165,9 +165,13 @@ void render_sprite(Chip8 *c8, uint8_t sprite_index, uint8_t height, uint8_t x,
                    uint8_t y) {
   x = x % SCREEN_WIDTH;
   y = y % SCREEN_HEIGHT;
+  uint8_t offset = x % SPRITE_WIDTH;
+  uint8_t buffer = 0;
   for (uint8_t i = 0; i < height; i++) {
     uint8_t byte = c8->memory[sprite_index];
-    c8->frame[x + i][y] ^= byte;
+    c8->frame[(x + i) / 8][y] ^= (byte >> offset);
+    buffer = (byte << (SPRITE_WIDTH - offset)) >> (SPRITE_WIDTH - offset);
+    c8->frame[(x + i) / 8 + 1][y] ^= buffer;
     if (x + i >= SCREEN_WIDTH) {
       break;
     }

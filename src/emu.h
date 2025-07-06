@@ -6,6 +6,7 @@
 
 #define SCREEN_WIDTH 64
 #define SCREEN_HEIGHT 32
+#define SPRITE_WIDTH 8
 
 // sourced from
 // https://www.cs.columbia.edu/~sedwards/classes/2022/4840-spring/designs/CHIP-8.pdf
@@ -18,7 +19,7 @@ typedef struct {
   uint8_t stack_ptr;
   uint8_t timer;
   uint8_t sound_reg;
-  bool frame[SCREEN_WIDTH / 8][SCREEN_HEIGHT];
+  bool frame[SCREEN_WIDTH / SPRITE_WIDTH][SCREEN_HEIGHT];
   uint8_t memory[0xFFF];
   bool halted;
 } Chip8;
