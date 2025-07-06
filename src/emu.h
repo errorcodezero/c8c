@@ -18,7 +18,7 @@ typedef struct {
   uint8_t stack_ptr;
   uint8_t timer;
   uint8_t sound_reg;
-  bool frame[SCREEN_WIDTH][SCREEN_HEIGHT];
+  bool frame[SCREEN_WIDTH / 8][SCREEN_HEIGHT];
   uint8_t memory[0xFFF];
   bool halted;
 } Chip8;
