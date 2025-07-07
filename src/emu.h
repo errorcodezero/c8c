@@ -28,5 +28,6 @@ Chip8 init_chip8();
 void step_chip8(Chip8 *c8);
 void render_sprite(Chip8 *c8, uint8_t sprite_index, uint8_t size, uint8_t x,
                    uint8_t y);
+void frame_to_console(Chip8 *c8);
 
 #endif // INCLUDE_SRC_EMU_H_

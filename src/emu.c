@@ -1,5 +1,6 @@
 #include "emu.h"
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -148,6 +149,7 @@ void step_chip8(Chip8 *c8) {
     uint8_t *reg = &c8->registers[(instruction >> 4) & 0x0F];
     *reg = ((uint8_t)instruction) & random;
   } else if ((instruction & 0xF000) == 0xD000) {
+    render_sprite(c8, c8->index, (instruction & 0x0F), ((instruction >> 4) & 0x0F), ((instruction >> 2) & 0x0F));
   } else if ((instruction & 0xF000) == 0xE000) {
   } else if ((instruction & 0xF000) == 0xF000) {
   } else {
@@ -178,6 +180,14 @@ void render_sprite(Chip8 *c8, uint8_t sprite_index, uint8_t height, uint8_t x,
     }
     if (++y >= SCREEN_HEIGHT) {
       break;
+    }
+  }
+}
+
+void frame_to_console(Chip8 *c8) {
+  for (uint8_t i = 0; i < SCREEN_HEIGHT; i++) {
+    for (uint8_t j = 0; j < SCREEN_WIDTH / SPRITE_WIDTH; j++) {
+      printf("%d", c8->frame[j][i]);
     }
   }
 }
